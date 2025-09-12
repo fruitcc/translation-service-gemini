@@ -17,7 +17,7 @@ SSH into your VPS and run:
 
 ```bash
 # Download and run the setup script
-wget https://raw.githubusercontent.com/YOUR_USERNAME/translation-service/main/deploy/setup-vps.sh
+wget https://raw.githubusercontent.com/fruitcc/translation-service-gemini/main/deploy/setup-vps.sh
 chmod +x setup-vps.sh
 ./setup-vps.sh
 ```
@@ -83,7 +83,7 @@ sudo chown $USER:$USER /var/www/translation-service
 
 # Clone repository
 cd /var/www
-git clone https://github.com/YOUR_USERNAME/translation-service.git
+git clone https://github.com/fruitcc/translation-service-gemini.git translation-service
 cd translation-service
 
 # Install dependencies

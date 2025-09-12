@@ -36,7 +36,7 @@ sudo chown $USER:$USER /var/www/translation-service
 # Clone repository
 echo "Cloning repository..."
 cd /var/www
-git clone https://github.com/YOUR_USERNAME/translation-service.git
+git clone https://github.com/fruitcc/translation-service-gemini.git translation-service
 cd translation-service
 
 # Install dependencies
