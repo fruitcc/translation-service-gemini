@@ -1,0 +1,33 @@
+{
+  "name": "translation-service",
+  "version": "1.0.0",
+  "description": "Backend translation service using Gemini AI",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "stop": "node scripts/stop-server.js",
+    "dev": "nodemon src/server.js",
+    "restart": "npm run stop && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "translation",
+    "gemini",
+    "api",
+    "ios"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
