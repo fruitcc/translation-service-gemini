@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: translation-service-gemini
+    runtime: node
+    repo: https://github.com/fruitcc/translation-service-gemini
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: GEMINI_API_KEY
+        sync: false # This will need to be set manually in Render dashboard
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 60000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+    healthCheckPath: /api/health
+    region: oregon # Options: oregon, ohio, frankfurt, singapore
