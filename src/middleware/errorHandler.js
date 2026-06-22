@@ -1,11 +1,25 @@
 const errorHandler = (err, req, res, next) => {
-  console.error('Error:', {
+  const statusCode =
+    err.name === 'ValidationError' ? 400 :
+    err.name === 'UnauthorizedError' ? 401 :
+    err.statusCode || 500;
+
+  const logContext = {
+    statusCode,
     message: err.message,
-    stack: err.stack,
+    details: err.details,
     timestamp: new Date().toISOString(),
     path: req.path,
     method: req.method,
-  });
+  };
+
+  // Full stack traces only for unexpected server errors (5xx). Expected client
+  // errors (validation, CORS) log a concise one-liner so real problems stand out.
+  if (statusCode >= 500) {
+    console.error('Server error:', { ...logContext, stack: err.stack });
+  } else {
+    console.warn('Client error:', logContext);
+  }
 
   if (err.name === 'ValidationError') {
     return res.status(400).json({

@@ -13,10 +13,19 @@ app.use(helmet());
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || config.cors.origins.includes(origin)) {
+    // No Origin header (native mobile apps, curl, server-to-server) is always
+    // allowed. '*' in ALLOWED_ORIGINS allows any browser origin — appropriate
+    // here because CORS only guards browsers and this API has no cookie auth,
+    // so origin-blocking adds no security and just breaks legitimate clients.
+    if (!origin || config.cors.origins.includes('*') || config.cors.origins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      // Reject with a 403 (handled in errorHandler) instead of falling through
+      // to a generic 500, so a blocked origin is obvious rather than a mystery.
+      const error = new Error(`Origin '${origin}' is not allowed by CORS`);
+      error.name = 'CorsError';
+      error.statusCode = 403;
+      callback(error);
     }
   },
   credentials: true,

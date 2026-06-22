@@ -42,7 +42,16 @@ class TranslationService {
       };
     } catch (error) {
       console.error('Translation error:', error);
-      throw new Error(`Translation failed: ${error.message}`);
+      // Surface upstream (Gemini) failures as a 502 with the real reason instead
+      // of a generic 500, so problems like a retired model name are diagnosable.
+      // The API key can appear in the request URL, so redact it before returning.
+      const upstreamError = new Error('Translation provider request failed');
+      upstreamError.name = 'UpstreamError';
+      upstreamError.statusCode = 502;
+      upstreamError.details = String(error.message || 'Unknown upstream error')
+        .replace(/key=[\w-]+/gi, 'key=REDACTED')
+        .slice(0, 300);
+      throw upstreamError;
     }
   }
 

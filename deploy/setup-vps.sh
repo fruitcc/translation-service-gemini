@@ -52,6 +52,11 @@ cat > .env << EOF
 NODE_ENV=production
 PORT=3001
 GEMINI_API_KEY=YOUR_API_KEY_HERE
+# Browser origins allowed to call the API (comma-separated), or '*' for any.
+# CORS only guards browsers; it does nothing for native/hybrid mobile apps and
+# adds no security to this no-auth API, so '*' is the right default here.
+# To lock down to specific web frontends instead: ALLOWED_ORIGINS=https://app.example.com
+ALLOWED_ORIGINS=*
 EOF
 
 echo "Please edit /var/www/translation-service/.env and add your GEMINI_API_KEY"
